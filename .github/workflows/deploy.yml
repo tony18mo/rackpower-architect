@@ -1,0 +1,65 @@
+name: CI & Deploy to Hostinger
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  web-ci:
+    name: 🧪 Build & test
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: 📦 Install Dependencies
+        run: npm ci
+
+      - name: 🔍 Typecheck
+        run: npm run typecheck
+
+      - name: 🧪 Run Tests
+        run: npm run test
+
+      - name: 🏗️ Build Project
+        run: npm run build
+
+      - name: 📂 Stage build output
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 1
+
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    needs: web-ci
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      secrets.HOSTINGER_FTP_PASSWORD != ''
+    steps:
+      - name: 🚚 Fetch built assets
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: 📂 Sync files to Hostinger
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.HOSTINGER_FTP_SERVER }}
+          username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
+          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          local-dir: ./dist/
+          protocol: ftps
