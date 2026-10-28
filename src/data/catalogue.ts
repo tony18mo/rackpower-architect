@@ -1,0 +1,346 @@
+/**
+ * Illustrative equipment catalogue (PRD §3.1 "unmounted devices awaiting placement").
+ *
+ * The catalogue is sample data for the planner: dimensions are EIA-310-D consistent,
+ * depths and cord classes are representative of enterprise gear, but no real vendor's
+ * datasheet values are reproduced.
+ */
+
+import type { DeviceInstance, DeviceSpec } from '../types/rack';
+
+export const DEVICE_CATALOGUE: DeviceSpec[] = [
+  {
+    id: 'srv-2u-dual',
+    vendor: 'Vertex',
+    model: 'R760 Dual-Socket Compute',
+    category: 'server',
+    heightU: 2,
+    depthMm: 735,
+    widthMm: 482.6,
+    weightKg: 18.5,
+    powerDrawW: 800,
+    psuCount: 2,
+    inlets: ['C20', 'C20'],
+    rails: ['front'],
+    note: 'Hot-plug redundant PSUs, C20 inlets.',
+  },
+  {
+    id: 'srv-2u-mid',
+    vendor: 'Vertex',
+    model: 'R660 Mid-Tier Compute',
+    category: 'server',
+    heightU: 2,
+    depthMm: 690,
+    widthMm: 482.6,
+    weightKg: 17,
+    powerDrawW: 700,
+    psuCount: 2,
+    inlets: ['C20', 'C20'],
+    rails: ['front'],
+  },
+  {
+    id: 'srv-1u-edge',
+    vendor: 'Halcyon',
+    model: 'M1 Edge Node',
+    category: 'server',
+    heightU: 1,
+    depthMm: 450,
+    widthMm: 482.6,
+    weightKg: 9,
+    powerDrawW: 350,
+    psuCount: 1,
+    inlets: ['C14'],
+    rails: ['front'],
+  },
+  {
+    id: 'srv-5u-blade',
+    vendor: 'Vertex',
+    model: 'B7 Blade Enclosure',
+    category: 'server',
+    heightU: 5,
+    depthMm: 780,
+    widthMm: 482.6,
+    weightKg: 46,
+    powerDrawW: 3200,
+    psuCount: 4,
+    inlets: ['IEC-309-32A', 'IEC-309-32A', 'C20', 'C20'],
+    rails: ['front'],
+    note: 'Deep enclosure: needs rear-rail clearance verification in shallow frames.',
+  },
+  {
+    id: 'sto-4u-array',
+    vendor: 'Northgate',
+    model: 'TB70 Storage Array',
+    category: 'storage',
+    heightU: 4,
+    depthMm: 820,
+    widthMm: 482.6,
+    weightKg: 58,
+    powerDrawW: 1500,
+    psuCount: 2,
+    inlets: ['C20', 'C20'],
+    rails: ['front'],
+  },
+  {
+    id: 'sto-2u-jbod',
+    vendor: 'Northgate',
+    model: 'JB4 Disk Expansion',
+    category: 'storage',
+    heightU: 2,
+    depthMm: 610,
+    widthMm: 482.6,
+    weightKg: 28,
+    powerDrawW: 300,
+    psuCount: 2,
+    inlets: ['C14', 'C14'],
+    rails: ['front'],
+  },
+  {
+    id: 'net-1u-tor',
+    vendor: 'Cirro',
+    model: 'S48 Top-of-Rack Switch',
+    category: 'network',
+    heightU: 1,
+    depthMm: 460,
+    widthMm: 482.6,
+    weightKg: 7.2,
+    powerDrawW: 240,
+    psuCount: 2,
+    inlets: ['C14', 'C14'],
+    rails: ['front'],
+  },
+  {
+    id: 'net-1u-acc',
+    vendor: 'Cirro',
+    model: 'A32 Access Switch',
+    category: 'network',
+    heightU: 1,
+    depthMm: 300,
+    widthMm: 482.6,
+    weightKg: 4,
+    powerDrawW: 120,
+    psuCount: 1,
+    inlets: ['C14'],
+    rails: ['front', 'rear'],
+  },
+  {
+    id: 'sec-1u-fw',
+    vendor: 'Blackline',
+    model: 'FX Perimeter Firewall',
+    category: 'security',
+    heightU: 1,
+    depthMm: 400,
+    widthMm: 482.6,
+    weightKg: 6.1,
+    powerDrawW: 150,
+    psuCount: 2,
+    inlets: ['C14', 'C14'],
+    rails: ['front'],
+  },
+  {
+    id: 'kvm-1u-console',
+    vendor: 'Halcyon',
+    model: 'Console Drawer 1U',
+    category: 'kvm',
+    heightU: 1,
+    depthMm: 350,
+    widthMm: 482.6,
+    weightKg: 5.4,
+    powerDrawW: 30,
+    psuCount: 1,
+    inlets: ['C14'],
+    rails: ['front'],
+    note: 'Slide-out drawer: keep a clear cord path below.',
+  },
+  {
+    id: 'ups-2u-modular',
+    vendor: 'Northgate',
+    model: 'U2 Modular UPS',
+    category: 'ups',
+    heightU: 2,
+    depthMm: 600,
+    widthMm: 482.6,
+    weightKg: 44,
+    powerDrawW: 0,
+    psuCount: 1,
+    inlets: ['IEC-309-32A'],
+    rails: ['front'],
+    note: 'Power source, not a load.',
+  },
+  {
+    id: 'pp-1u-48',
+    vendor: 'Cirro',
+    model: 'P48 Copper Patch Panel',
+    category: 'patch-panel',
+    heightU: 1,
+    depthMm: 130,
+    widthMm: 482.6,
+    weightKg: 2.5,
+    powerDrawW: 0,
+    psuCount: 0,
+    inlets: [],
+    rails: ['front', 'rear'],
+  },
+  {
+    id: 'blank-1u',
+    vendor: 'Cirro',
+    model: 'Blanking Panel 1U',
+    category: 'blank',
+    heightU: 1,
+    depthMm: 18,
+    widthMm: 482.6,
+    weightKg: 0.4,
+    powerDrawW: 0,
+    psuCount: 0,
+    inlets: [],
+    rails: ['front', 'rear'],
+  },
+  {
+    id: 'pdu-h-32a',
+    vendor: 'Verta',
+    model: 'HP32 Rear-Mount PDU (IEC-309 inlet)',
+    category: 'pdu-horizontal',
+    heightU: 1,
+    depthMm: 58,
+    widthMm: 482.6,
+    weightKg: 3.2,
+    powerDrawW: 0,
+    psuCount: 1,
+    inlets: ['IEC-309-32A'],
+    rails: ['rear'],
+    outlets: { c13: 21, c19: 3 },
+    ratedAmps: 32,
+  },
+  {
+    id: 'pdu-h-c20',
+    vendor: 'Verta',
+    model: 'HP16 Rear-Mount PDU (C20 inlet)',
+    category: 'pdu-horizontal',
+    heightU: 1,
+    depthMm: 58,
+    widthMm: 482.6,
+    weightKg: 2.8,
+    powerDrawW: 0,
+    psuCount: 1,
+    inlets: ['C20'],
+    rails: ['rear'],
+    outlets: { c13: 14, c19: 4 },
+    ratedAmps: 16,
+  },
+  {
+    id: 'pdu-v-42u',
+    vendor: 'Verta',
+    model: 'VP42 Zero-U PDU (32 A)',
+    category: 'pdu-vertical',
+    heightU: 0,
+    depthMm: 56,
+    lengthMm: 1780,
+    weightKg: 4.2,
+    powerDrawW: 0,
+    psuCount: 1,
+    inlets: ['IEC-309-32A'],
+    rails: ['rear'],
+    outlets: { c13: 22, c19: 6 },
+    ratedAmps: 32,
+  },
+  {
+    id: 'pdu-v-30u',
+    vendor: 'Verta',
+    model: 'VP30 Zero-U PDU (16 A)',
+    category: 'pdu-vertical',
+    heightU: 0,
+    depthMm: 56,
+    lengthMm: 1300,
+    weightKg: 3.4,
+    powerDrawW: 0,
+    psuCount: 1,
+    inlets: ['C20'],
+    rails: ['rear'],
+    outlets: { c13: 18, c19: 4 },
+    ratedAmps: 16,
+  },
+  {
+    id: 'pdu-v-22u',
+    vendor: 'Verta',
+    model: 'VP22 Zero-U PDU (C13 bank)',
+    category: 'pdu-vertical',
+    heightU: 0,
+    depthMm: 45,
+    lengthMm: 950,
+    weightKg: 2.6,
+    powerDrawW: 0,
+    psuCount: 1,
+    inlets: ['C14'],
+    rails: ['rear'],
+    outlets: { c13: 24, c19: 0 },
+    ratedAmps: 16,
+  },
+];
+
+export const CATALOGUE_BY_ID: Record<string, DeviceSpec> = Object.fromEntries(
+  DEVICE_CATALOGUE.map((spec) => [spec.id, spec]),
+);
+
+export function specOf(specId: string): DeviceSpec | undefined {
+  return CATALOGUE_BY_ID[specId];
+}
+
+/** Tray quantities per catalogue line; totals ≈ 4.9k unmounted units (PRD §3.1). */
+const INVENTORY_QUANTITIES: Record<string, number> = {
+  'srv-2u-dual': 1200,
+  'srv-2u-mid': 900,
+  'srv-1u-edge': 800,
+  'srv-5u-blade': 60,
+  'sto-4u-array': 200,
+  'sto-2u-jbod': 300,
+  'net-1u-tor': 400,
+  'net-1u-acc': 400,
+  'sec-1u-fw': 100,
+  'kvm-1u-console': 50,
+  'ups-2u-modular': 30,
+  'pp-1u-48': 200,
+  'blank-1u': 300,
+  'pdu-h-32a': 8,
+  'pdu-h-c20': 8,
+  'pdu-v-42u': 12,
+  'pdu-v-30u': 12,
+  'pdu-v-22u': 8,
+};
+
+/** Flattened inventory pool: one DeviceInstance per physical unit. */
+export function buildInventory(): DeviceInstance[] {
+  const instances: DeviceInstance[] = [];
+  for (const spec of DEVICE_CATALOGUE) {
+    const quantity = INVENTORY_QUANTITIES[spec.id] ?? 0;
+    for (let i = 1; i <= quantity; i += 1) {
+      instances.push({
+        uid: `${spec.id}#${String(i).padStart(4, '0')}`,
+        specId: spec.id,
+        assetTag: `${spec.id.toUpperCase().slice(0, 3)}-${String(i).padStart(4, '0')}`,
+      });
+    }
+  }
+  return instances;
+}
+
+export const INVENTORY_SIZE = Object.values(INVENTORY_QUANTITIES).reduce((a, b) => a + b, 0);
+
+const STARTER_KIT: Array<[string, number]> = [
+  ['pdu-h-32a', 2],
+  ['srv-2u-dual', 8],
+  ['srv-1u-edge', 6],
+  ['net-1u-tor', 2],
+  ['sec-1u-fw', 1],
+  ['sto-4u-array', 1],
+  ['pp-1u-48', 2],
+];
+
+/** Starter kit the "Auto-place" demo seeds a rack from. */
+export function starterKit(): DeviceInstance[] {
+  const pool = buildInventory();
+  const kit: DeviceInstance[] = [];
+  for (const [specId, count] of STARTER_KIT) {
+    kit.push(...pool.filter((instance) => instance.specId === specId).slice(0, count));
+  }
+  return kit;
+}
