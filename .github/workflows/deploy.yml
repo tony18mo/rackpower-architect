@@ -45,9 +45,12 @@ jobs:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
     needs: web-ci
+    # Opt-in: set the repository variable HOSTINGER_DEPLOY to "true"
+    # (Settings → Secrets and variables → Actions → Variables) once the
+    # HOSTINGER_FTP_SERVER / _USERNAME / _PASSWORD secrets exist.
     if: >-
       github.ref == 'refs/heads/main' &&
-      secrets.HOSTINGER_FTP_PASSWORD != ''
+      vars.HOSTINGER_DEPLOY == 'true'
     steps:
       - name: 🚚 Fetch built assets
         uses: actions/download-artifact@v4
