@@ -7,6 +7,12 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
+
+# Never let two deploys overlap on the same docroot.
+concurrency:
+  group: hostinger-deploy
+  cancel-in-progress: false
 
 jobs:
   web-ci:
